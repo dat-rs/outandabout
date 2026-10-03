@@ -1,0 +1,1 @@
+<strong>Out and About</strong> is a running log of design found on the street: shop fronts, hand-painted signs, tiles, notices, price tags, the things nobody signed. A side project of the <a href="https://soldesignarchive.com?utm_source=outandabout&utm_medium=ref&utm_content=site_info">Sol Design Archive</a>.

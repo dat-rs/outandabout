@@ -1,0 +1,42 @@
+---
+---
+
+{%- capture description %}{{ content | strip_html | strip_newlines | truncatewords: 30 }}{% endcapture -%}
+{%- capture image %}/images/oaa-{{ page.ref_id }}-{{ page.slug }}.jpg{% endcapture -%}
+{% include head-and-header.html page-meta-title=page.title page-meta-description=description page-meta-image=image page-meta-url=page.url %}
+
+{%- comment -%}
+  Newer/older in feed order (ref_id, newest first). Liquid wraps a negative
+  index round to the end of the array, so the newer side needs its guard.
+{%- endcomment -%}
+{%- assign artefacts = site.artefacts | sort: "ref_id" | reverse -%}
+{%- for artefact in artefacts -%}
+  {%- if artefact.url == page.url -%}{%- assign i = forloop.index0 -%}{%- endif -%}
+{%- endfor -%}
+{%- if i > 0 -%}{%- assign newer_i = i | minus: 1 -%}{%- assign newer = artefacts[newer_i] -%}{%- endif -%}
+{%- assign older_i = i | plus: 1 -%}
+{%- assign older = artefacts[older_i] -%}
+
+<div class="container-fluid oa-main first-after-header">
+  <div class="row g-0 oa-main-row">
+    {% include left-col.html %}
+
+    <main class="col-12 col-md-9 col-lg-10 oa-right-col">
+      <article class="oa-single" id="oaa-{{ page.ref_id }}">
+        {% include artefact-entry.html artefact=page heading="h1" %}
+      </article>
+
+      <nav class="oa-prev-next">
+        {%- if newer %}
+        <a class="oa-prev-next-link newer" href="{{ newer.url }}"><span class="deet-label">&larr; Newer</span> {{ newer.title }}</a>
+        {%- endif %}
+        {%- if older %}
+        <a class="oa-prev-next-link older" href="{{ older.url }}"><span class="deet-label">Older &rarr;</span> {{ older.title }}</a>
+        {%- endif %}
+      </nav>
+    </main>
+  </div>
+</div>
+
+{% include scripts.html %}
+{% include the-end.html %}

@@ -1,0 +1,25 @@
+title: "Out and About"
+description: "A running log of vernacular design spotted on the street. A Sol Design Archive side project."
+# Set once the domain is known (and add a CNAME file to match). Feed,
+# sitemap and the og:/twitter: tags build absolute URLs from it.
+url: ""
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+feed:
+  collections:
+    - artefacts
+collections:
+  artefacts:
+    output: true
+    permalink: /artefacts/:path/
+defaults:
+  - scope:
+      path: ""
+      type: artefacts
+    values:
+      layout: artefact
+exclude:
+  - CLAUDE.md
+  - scripts/

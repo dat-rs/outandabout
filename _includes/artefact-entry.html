@@ -1,0 +1,57 @@
+{%- comment -%}
+  One artefact: photos on the left, title, blurb and tags on the right.
+  Used by the feed (heading=h2, title links to the artefact's page) and by
+  the artefact layout (heading=h1).
+
+  Tag links point into the feed with ?tags=, so they work anywhere. On the
+  feed js/oaa.js catches them through data-tag and filters in place.
+{%- endcomment -%}
+
+{%- assign a = include.artefact -%}
+{%- assign heading = include.heading | default: "h2" -%}
+
+<div class="row g-0 oa-entry">
+  <div class="col-12 col-md-7 col-xl-6 oa-photos-col">
+    {% include artefact-photos.html artefact=a %}
+  </div>
+
+  <div class="col-12 col-md-5 col-xl-6 oa-text-col">
+    <div class="oa-text">
+      <span class="reference">oaa-{{ a.ref_id }}</span>
+
+      <{{ heading }} class="oa-title">
+        {%- if heading == "h1" -%}{{ a.title }}{%- else -%}<a href="{{ a.url }}">{{ a.title }}</a>{%- endif -%}
+      </{{ heading }}>
+
+      {%- assign blurb = a.content | strip_newlines | strip -%}
+      {%- if blurb != "" %}
+      <section class="oa-blurb">{{ a.content }}</section>
+      {%- endif %}
+
+      <section class="oa-deets">
+        {%- if a.seen %}
+        <div class="oa-deet">
+          <span class="deet-label">When</span>
+          <span class="deet-links">{{ a.seen | date: "%-d %b %Y" }}</span>
+        </div>
+        {%- endif %}
+        {%- if a.location %}
+        <div class="oa-deet">
+          <span class="deet-label">Where</span>
+          <span class="deet-links">{{ a.location }}</span>
+        </div>
+        {%- endif %}
+        <div class="oa-deet">
+          <span class="deet-label">Tags</span>
+          <span class="deet-links">
+            {%- for tag in a.tags -%}
+            {%- assign tag_slug = tag | slugify %}
+            <a class="deet-link tag" href="/?tags={{ tag_slug }}" data-tag="{{ tag_slug }}">{{ tag | replace: "-", " " }}</a>
+            {%- endfor -%}
+            {%- if a.tags.size == 0 %}&mdash;{% endif -%}
+          </span>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

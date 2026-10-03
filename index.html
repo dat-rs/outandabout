@@ -1,0 +1,32 @@
+---
+title: "Out and About"
+description: "A running log of vernacular design spotted on the street. A Sol Design Archive side project."
+---
+
+{% include head-and-header.html page-meta-title=page.title page-meta-url=page.url page-meta-description=page.description current="feed" %}
+
+{%- comment -%} Newest first: refs are handed out in the order artefacts are added. {%- endcomment -%}
+{%- assign artefacts = site.artefacts | sort: "ref_id" | reverse -%}
+
+<div class="container-fluid oa-main first-after-header">
+  <div class="row g-0 oa-main-row">
+    {% include left-col.html mode="filter" %}
+
+    <main class="col-12 col-md-9 col-lg-10 oa-right-col">
+      {%- if artefacts.size == 0 %}
+      <p class="oa-empty">Nothing here yet.</p>
+      {%- endif %}
+
+      <div id="oa-isotope" class="oa-feed" data-view="feed">
+        {%- for artefact in artefacts %}
+        <article class="oa-item{% for tag in artefact.tags %} tag-{{ tag | slugify }}{% endfor %}" id="oaa-{{ artefact.ref_id }}">
+          {% include artefact-entry.html artefact=artefact %}
+        </article>
+        {%- endfor %}
+      </div>
+    </main>
+  </div>
+</div>
+
+{% include scripts.html %}
+{% include the-end.html %}

@@ -1,0 +1,41 @@
+---
+title: "Grid - Out and About"
+description: "Every artefact in Out and About, at a glance."
+permalink: /grid/
+---
+
+{% include head-and-header.html page-meta-title=page.title page-meta-url=page.url page-meta-description=page.description current="grid" %}
+
+{%- assign artefacts = site.artefacts | sort: "ref_id" | reverse -%}
+
+<div class="container-fluid oa-main first-after-header">
+  <div class="row g-0 oa-main-row">
+    {% include left-col.html mode="filter" %}
+
+    <main class="col-12 col-md-9 col-lg-10 oa-right-col">
+      {%- if artefacts.size == 0 %}
+      <p class="oa-empty">Nothing here yet.</p>
+      {%- endif %}
+
+      <div id="oa-isotope" class="oa-grid" data-view="grid">
+        <div class="oa-grid-sizer"></div>
+        {%- for artefact in artefacts %}
+        {%- capture thumb %}/images/sm/oaa-{{ artefact.ref_id }}-{{ artefact.slug }}-sm.jpg{% endcapture %}
+        {%- capture full %}/images/oaa-{{ artefact.ref_id }}-{{ artefact.slug }}.jpg{% endcapture %}
+        <div class="oa-item oa-grid-item{% for tag in artefact.tags %} tag-{{ tag | slugify }}{% endfor %}">
+          <a class="a-module" href="{{ artefact.url }}" title="{{ artefact.title | escape }}">
+            <div class="a-module-img-holder square">
+              <!-- Falls back to the full photo until scripts/thumbs.sh has made the thumbnail. -->
+              <img class="a-module-img" loading="lazy" src="{{ thumb }}" alt="{{ artefact.title | escape }}"
+                onerror="this.onerror = null; this.src = '{{ full }}';" />
+            </div>
+          </a>
+        </div>
+        {%- endfor %}
+      </div>
+    </main>
+  </div>
+</div>
+
+{% include scripts.html %}
+{% include the-end.html %}

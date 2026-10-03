@@ -1,0 +1,708 @@
+---
+---
+
+/* Out and About
+
+   A Sol Design Archive side project, so the palette, the type and the filter
+   idiom come from soldesignarchive's css/style.scss. Where a class does the
+   same job as one there it keeps that name (.filter-group, .a-filter-label,
+   .deet-label, .a-module...), so a fix on one site carries across. */
+
+/* Colors */
+
+$artefact-color: #e16640;
+$bg-white: #fcfbf7;
+$off-1: #f2f0ed;
+$off-2: #ebe9e4;
+$gray: #cccccc;
+$blue: #1ea0ff;
+
+/* Layout
+
+   The header is one line at every width, so it has one height. The fixed
+   header, the offset below it, the sticky left column and the photo stage's
+   height cap all read it. */
+
+$header-height: 44px;
+$gutter: 12px;
+
+/* Fonts */
+
+@font-face {
+  font-family: "Tiempos Text";
+  font-weight: 400;
+  font-style: normal;
+  src: url("/fonts/tiempos-text-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Tiempos Text";
+  font-weight: 600;
+  font-style: normal;
+  src: url("/fonts/tiempos-text-semibold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Tiempos Text";
+  font-weight: 400;
+  font-style: italic;
+  src: url("/fonts/tiempos-text-regular-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Tiempos Text";
+  font-weight: 600;
+  font-style: italic;
+  src: url("/fonts/tiempos-text-semibold-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Founders Grotesk Condensed";
+  font-weight: 300;
+  font-style: normal;
+  src: url("/fonts/founders-grotesk-condensed-light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Founders Grotesk Condensed";
+  font-weight: 400;
+  font-style: normal;
+  src: url("/fonts/founders-grotesk-condensed-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Founders Grotesk Condensed";
+  font-weight: 500;
+  font-style: normal;
+  src: url("/fonts/founders-grotesk-condensed-medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Founders Grotesk Condensed";
+  font-weight: 600;
+  font-style: normal;
+  src: url("/fonts/founders-grotesk-condensed-semibold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Founders Grotesk Condensed";
+  font-weight: 700;
+  font-style: normal;
+  src: url("/fonts/founders-grotesk-condensed-bold.woff2") format("woff2");
+}
+
+$body: "Tiempos Text";
+$titlecondensed: "Founders Grotesk Condensed";
+/* degular-mono comes from the Adobe Fonts kit linked in head-and-header.html */
+$paratext: "degular-mono";
+
+/* General */
+
+body {
+  font-family: $body, serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  font-variant-numeric: oldstyle-nums;
+  -webkit-font-smoothing: auto;
+  background-color: $off-2;
+  color: black;
+}
+
+img {
+  max-width: 100%;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.top-border {
+  border-top: 1px solid $gray;
+
+  &.dashed {
+    border-top-style: dashed;
+  }
+}
+
+/* HEADER */
+
+.container-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height;
+  z-index: 1000;
+  background-color: $off-2;
+  border-bottom: 1px solid black;
+}
+
+.header-row {
+  height: 100%;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+h1.site-title {
+  font-family: $titlecondensed, sans-serif;
+  font-size: 21px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: normal;
+  white-space: nowrap;
+  margin: 0;
+  /* Optical centring: the caps sit high in the line box. */
+  padding-top: 3px;
+
+  a:hover {
+    color: $artefact-color;
+  }
+}
+
+.sub-header-link {
+  font-family: $paratext, monospace;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  color: black;
+  margin-right: 12px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: coral;
+  }
+
+  &.is-current {
+    color: $blue;
+  }
+
+  &.santos {
+    color: gray;
+    margin-right: 0;
+
+    &:hover {
+      color: coral;
+    }
+  }
+}
+
+.first-after-header {
+  margin-top: $header-height;
+}
+
+/* MAIN
+
+   Edge to edge: the left column's ground runs to the window's edge, and
+   its own padding sets the 12px inset the header's title sits at too. */
+
+.container-fluid.oa-main {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.oa-main-row {
+  min-height: calc(100vh - #{$header-height});
+}
+
+/* LEFT COL */
+
+/* The ground sits on the column so it runs the full height of the feed
+   beside it; the content inside stays put while the feed scrolls. */
+.oa-left-col {
+  background-color: $off-1;
+
+  @media (min-width: 768px) {
+    border-right: 1px solid black;
+  }
+}
+
+.left-col-fixed {
+  @media (min-width: 768px) {
+    position: sticky;
+    top: $header-height;
+    max-height: calc(100vh - #{$header-height});
+    overflow-y: auto;
+  }
+}
+
+.oa-site-info {
+  padding: $gutter $gutter 4px;
+
+  p {
+    font-family: $body, serif;
+    font-size: 15px;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+
+  a {
+    border-bottom: 1px solid;
+
+    &:hover {
+      color: $blue;
+    }
+  }
+}
+
+.filter-group {
+  padding: 6px $gutter 10px;
+}
+
+h3.section-title.artefacts-filter {
+  display: block;
+  font-family: $titlecondensed, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  color: $blue;
+  margin-bottom: 2px;
+}
+
+.oa-filter-toggle {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  text-transform: inherit;
+
+  .oa-toggle-sign::after {
+    content: "+";
+  }
+
+  @media (min-width: 768px) {
+    cursor: default;
+
+    .oa-toggle-sign {
+      display: none;
+    }
+  }
+}
+
+.oa-tags-group.is-open .oa-toggle-sign::after {
+  content: "\2013";
+}
+
+/* Below md the list folds away under its heading; from md it is always
+   out, and the toggle is inert. */
+.oa-tags-group .oa-tag-list,
+.oa-tags-group .oa-count {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+.oa-tags-group.is-open .oa-tag-list,
+.oa-tags-group.is-open .oa-count {
+  display: block;
+}
+
+.oa-count {
+  font-family: $paratext, monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  color: rgba(0, 0, 0, 0.55);
+  margin-bottom: 6px;
+}
+
+.oa-clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: coral;
+  margin-left: 4px;
+
+  &:hover {
+    color: $blue;
+  }
+}
+
+.oa-back:hover {
+  color: $blue;
+}
+
+/* Filter labels: as soldesignarchive's .a-filter-label */
+
+.a-filter-label {
+  font-family: $paratext, monospace;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: normal;
+  text-align: left;
+  color: black;
+  padding: 1px 1px 0;
+  margin-bottom: 1px;
+  margin-right: 3px;
+  background-color: transparent;
+
+  &:hover {
+    color: $blue;
+  }
+
+  &.is-current {
+    background-color: $blue;
+    color: $bg-white;
+    border-color: $blue;
+  }
+}
+
+.btn-check:focus + .btn,
+.btn:focus {
+  box-shadow: none;
+}
+
+.btn-check.filter.artefacts:checked + .a-filter-label {
+  background-color: $blue;
+  color: $bg-white;
+  border-color: $blue;
+}
+
+.btn-check:focus-visible + .a-filter-label {
+  outline: 1px dashed $blue;
+}
+
+.oa-tag-count {
+  font-size: 9px;
+  vertical-align: super;
+  margin-left: 2px;
+  opacity: 0.6;
+}
+
+.oa-colophon {
+  font-family: $paratext, monospace;
+  font-size: 12px;
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+
+  a:hover {
+    color: coral;
+  }
+}
+
+/* RIGHT COL */
+
+.oa-right-col {
+  /* Isotope positions items absolutely; it needs a positioned parent of
+     its own, which #oa-isotope is, but keep the column clean of padding
+     so the feed's 100% is the column's. */
+  padding: 0;
+}
+
+.oa-empty {
+  font-family: $paratext, monospace;
+  font-size: 14px;
+  padding: $gutter;
+}
+
+/* FEED */
+
+.oa-feed .oa-item {
+  width: 100%;
+}
+
+.oa-entry {
+  padding: $gutter;
+  border-bottom: 1px dashed black;
+}
+
+/* The photo stage. Portrait by default, since most of these are phone
+   photos, and never taller than the window below the header - so an entry
+   is at most one screenful, and its height never waits on an image. */
+.oa-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: calc(100vh - #{$header-height} - #{2 * $gutter});
+  background-color: black;
+  overflow: hidden;
+}
+
+.oa-photo-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.oa-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    padding: 30px;
+  }
+}
+
+/* Fancyapps carousel on the stage: fill it, dots inside at the foot. */
+
+.oa-stage.f-carousel {
+  --f-carousel-spacing: 0px;
+  --f-carousel-dot-color: #{$bg-white};
+
+  --f-button-width: 38px;
+  --f-button-height: 38px;
+  --f-button-svg-width: 16px;
+  --f-button-svg-height: 16px;
+  --f-button-svg-stroke-width: 2.5;
+  --f-button-color: #{$bg-white};
+  --f-button-border-radius: 50%;
+  --f-button-shadow: none;
+  --f-button-bg: coral;
+  --f-button-hover-bg: #{$blue};
+  --f-button-active-bg: #{$blue};
+  --f-button-prev-pos: 12px;
+  --f-button-next-pos: 12px;
+
+  .f-carousel__viewport,
+  .f-carousel__track,
+  .f-carousel__slide {
+    height: 100%;
+  }
+
+  .f-carousel__dots {
+    top: auto;
+    bottom: 6px;
+    z-index: 1;
+  }
+}
+
+/* Text */
+
+.oa-text {
+  padding-top: 14px;
+  max-width: 36em;
+
+  @media (min-width: 768px) {
+    padding-top: 0;
+    padding-left: 20px;
+  }
+}
+
+.reference {
+  display: block;
+  font-family: $paratext, monospace;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.oa-title {
+  font-family: $titlecondensed, sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 0.95;
+  letter-spacing: normal;
+  margin-top: 6px;
+  margin-bottom: 14px;
+
+  a:hover {
+    color: $artefact-color;
+  }
+
+  @media (min-width: 992px) {
+    font-size: 42px;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 50px;
+  }
+}
+
+.oa-blurb {
+  font-family: $body, serif;
+  font-weight: 400;
+  font-feature-settings: "onum";
+  font-variant-ligatures: common-ligatures;
+  font-size: 16px;
+  line-height: 24px;
+
+  @media (min-width: 576px) {
+    font-size: 17px;
+    line-height: 27px;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  p {
+    margin-bottom: 0.8em;
+  }
+
+  a {
+    font-weight: 600;
+
+    &:hover {
+      color: $blue;
+    }
+  }
+}
+
+.oa-deets {
+  border-top: 1px dashed $gray;
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+.oa-deet {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 4px;
+
+  .deet-label {
+    flex: 0 0 48px;
+  }
+}
+
+.deet-label,
+.deet-links {
+  font-family: $paratext, monospace;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
+
+.deet-label {
+  font-weight: 600;
+}
+
+.deet-link {
+  margin-right: 2px;
+
+  &::after {
+    content: ", ";
+  }
+
+  &:last-of-type::after {
+    content: none;
+  }
+
+  &:hover {
+    color: $blue;
+  }
+}
+
+/* SINGLE ARTEFACT */
+
+.oa-prev-next {
+  display: flex;
+  justify-content: space-between;
+  gap: $gutter;
+  padding: $gutter;
+}
+
+.oa-prev-next-link {
+  font-family: $paratext, monospace;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+
+  &.older {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  &:hover {
+    color: $blue;
+  }
+}
+
+.oa-404 {
+  padding: $gutter;
+}
+
+/* GRID */
+
+.oa-grid {
+  margin: 6px;
+}
+
+.oa-grid-sizer,
+.oa-grid-item {
+  width: 50%;
+
+  @media (min-width: 576px) {
+    width: 33.333%;
+  }
+
+  @media (min-width: 992px) {
+    width: 25%;
+  }
+
+  @media (min-width: 1200px) {
+    width: 20%;
+  }
+
+  @media (min-width: 1600px) {
+    width: 16.666%;
+  }
+}
+
+.oa-grid-item {
+  padding: 3px;
+}
+
+/* a-module: as soldesignarchive's grid tiles - the photo on black, and on
+   hover the ground turns coral and the photo screens onto it. */
+
+.a-module {
+  display: block;
+}
+
+.a-module-img-holder {
+  background-color: black;
+  position: relative;
+  width: 100%;
+  transition: background-color 0.2s;
+
+  &.square {
+    display: flex;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.a-module-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8%;
+}
+
+.a-module:hover .a-module-img-holder {
+  background-color: coral;
+}
+
+.a-module:hover .a-module-img-holder img {
+  mix-blend-mode: screen;
+}
+
+/* Fancybox */
+
+.fancybox__backdrop {
+  --fancybox-bg: #000000;
+}
+
+.fancybox__infobar {
+  font-family: $paratext, monospace;
+}

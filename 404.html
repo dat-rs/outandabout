@@ -1,0 +1,23 @@
+---
+title: "Not found - Out and About"
+description: "Nothing at this address."
+permalink: /404.html
+---
+
+{% include head-and-header.html page-meta-title=page.title page-meta-url=page.url page-meta-description=page.description %}
+
+<div class="container-fluid oa-main first-after-header">
+  <div class="row g-0 oa-main-row">
+    {% include left-col.html %}
+
+    <main class="col-12 col-md-9 col-lg-10 oa-right-col">
+      <div class="oa-text oa-404">
+        <span class="reference">404</span>
+        <h1 class="oa-title">Nothing at this address.</h1>
+        <p class="oa-blurb"><a href="/">Back to the feed</a></p>
+      </div>
+    </main>
+  </div>
+</div>
+
+{% include the-end.html %}

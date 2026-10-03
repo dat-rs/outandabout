@@ -1,0 +1,14 @@
+<!-- data-oa-keep-query: js/oaa.js copies the current ?tags= selection onto
+     these, so switching view keeps the filter. -->
+<nav class="col nav-col">
+  <a class="sub-header-link{% if include.current == 'feed' %} is-current{% endif %}" href="/" data-oa-keep-query>Feed</a
+  ><a class="sub-header-link{% if include.current == 'grid' %} is-current{% endif %}" href="/grid/" data-oa-keep-query>Grid</a>
+</nav>
+
+<div class="col-auto d-none d-sm-block byline-col">
+  <a
+    class="sub-header-link santos"
+    href="https://soldesignarchive.com?utm_source=outandabout&utm_medium=ref&utm_content=top_byline"
+    >A Sol Design Archive side prj</a
+  >
+</div>

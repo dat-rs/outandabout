@@ -1,0 +1,32 @@
+{%- comment -%}
+  An artefact's photos on a black stage. One photo sits on the stage as it
+  is; more than one become a Fancyapps carousel (js/oaa.js starts it). Either
+  way a click opens the full-size photo in Fancybox.
+
+  Photos are found by name, as on soldesignarchive:
+    images/oaa-{ref_id}-{slug}.jpg      the first
+    images/oaa-{ref_id}-{slug}-2.jpg    the second, and so on to image_count
+{%- endcomment -%}
+
+{%- assign a = include.artefact -%}
+{%- capture img_base %}/images/oaa-{{ a.ref_id }}-{{ a.slug }}{% endcapture -%}
+{%- assign image_count = a.image_count | default: 1 | plus: 0 -%}
+
+{%- if image_count > 1 %}
+<div class="oa-stage f-carousel" data-oa-carousel>
+  {%- for n in (1..image_count) -%}
+  {%- if n == 1 -%}{%- assign src = img_base | append: ".jpg" -%}{%- else -%}{%- capture src %}{{ img_base }}-{{ n }}.jpg{% endcapture -%}{%- endif %}
+  <div class="f-carousel__slide">
+    <a class="oa-photo-link" href="{{ src }}" data-fancybox="oaa-{{ a.ref_id }}">
+      <img class="oa-photo" loading="lazy" src="{{ src }}" alt="{{ a.title | escape }}, photo {{ n }} of {{ image_count }}" />
+    </a>
+  </div>
+  {%- endfor %}
+</div>
+{%- else %}
+<div class="oa-stage">
+  <a class="oa-photo-link" href="{{ img_base }}.jpg" data-fancybox="oaa-{{ a.ref_id }}">
+    <img class="oa-photo" loading="lazy" src="{{ img_base }}.jpg" alt="{{ a.title | escape }}" />
+  </a>
+</div>
+{%- endif %}
